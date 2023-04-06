@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flexcub-api
+  labels:
+    app: flexcub-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flexcub-api
+  template:
+    metadata:
+      labels:
+        app: flexcub-api
+    spec:
+      containers:
+        - name: flexcub-api
+          image: flexcubcontainerregistry.azurecr.io/flexcub-api:$(Build.BuildId)
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flexcub-api-svc
+
+status:
+  loadBalancer: {}
+spec:
+  ports:
+    - name: flexcub-api-svc
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: flexcub-api
+
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster
