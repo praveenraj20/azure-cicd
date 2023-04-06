@@ -3,8 +3,8 @@ jib {
     from {
         image = "azul/zulu-openjdk-alpine:11.0.4"
         auth {
-            username = "vasanthdev"
-            password = "k8swarm@20"
+            username = "praveenraj10"
+            password = "Praveenconqueror@123"
         }
     }
     to {
